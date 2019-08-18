@@ -1,0 +1,15 @@
+server:
+ port: 9101
+
+eureka:
+  client:
+    register-with-eureka: false
+    service-url:
+      defaultZone: http://admin:enjoy1@127.0.0.1:7001/eureka
+#      defaultZone: http://admin:enjoy1@eureka1:7001/eureka,http://admin:enjoy1@eureka2:7002/eureka,http://admin:enjoy1@eureka3:7003/eureka
+
+turbine:
+#  可以配置多个
+  app-config: MICROCLOUD-PROVIDER-PRODUCT
+#  app-config: MICROCLOUD-PROVIDER-PRODUCT,MICROCLOUD-PROVIDER-USERS
+  cluster-name-expression: new String("default")

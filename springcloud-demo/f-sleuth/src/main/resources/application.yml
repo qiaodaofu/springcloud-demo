@@ -1,0 +1,37 @@
+server:
+  port: 8601
+spring:
+  application:
+    name: microcloud-zipkin-server
+
+
+#这个必须要
+management:
+  metrics:
+    web:
+      server:
+        auto-time-requests: false
+
+
+# 持久化数据的配置
+zipkin:
+  collector:
+    sample-rate: 1.0
+    http:
+      enabled: true
+    rabbitmq:
+      addresses: 114.116.98.243:5672
+      username: qiaocan
+      password: 123456
+    #  queue: zipkin
+      virtual-host: enjoyedu
+  storage:
+    type: mysql
+    mysql:
+      host: localhost
+      port: 3306
+      username: root
+      password: root
+      db: test
+
+

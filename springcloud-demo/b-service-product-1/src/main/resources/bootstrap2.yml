@@ -1,0 +1,26 @@
+#这张表用在配置中心 springcloudconfig
+spring:
+  cloud:
+    config:
+      #uri:  http://localhost:7101
+      name: application-service-product
+      profile:  test
+      label:  master
+      username: admin
+      password: enjoy
+      discovery:
+        enabled: true
+        service-id: MICROCLOUD-CONFIG-BUS-SERVICE
+
+  rabbitmq:
+    host: 114.116.98.243
+    port: 5672    # RabbitMQ的监听端口
+    username: qiaocan  # 用户名
+    password: 123456 # 密码
+    virtual-host: enjoyedu
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://admin:enjoy@localhost:7011/eureka,http://admin:enjoy@localhost:7001/eureka    #多个eureka
+    register-with-eureka: false

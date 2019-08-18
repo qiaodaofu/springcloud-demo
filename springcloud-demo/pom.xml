@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>qiaocan</groupId>
+    <artifactId>springcloud-demo</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>a-eureka-1</module>
+        <module>a-eureka-2</module>
+        <module>a-eureka-3</module>
+        <module>b-service-product-1</module>
+        <module>c-service-api</module>
+        <module>c-service-security</module>
+        <module>b-consumer</module>
+        <module>d-turbine</module>
+        <module>d-hystrix-dashboard</module>
+        <module>d-zuul</module>
+        <module>e-config-bus-service</module>
+        <module>e-config-bus-client</module>
+        <module>e-config-eureka</module>
+        <module>f-sleuth</module>
+        <module>g-es</module>
+        <module>t-test</module>
+        <module>s-spring-test</module>
+    </modules>
+
+    <properties>
+        <jdk.version>1.8</jdk.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <!--<dependencyManagement> 作用：声明jar版本号，不会实际引用到项目中，
+        如果没有这个标签的话，只有dependencies标签就会引用到项目中。
+        如果groupId、artifactId没有指定version号就会去父项目的dependencyManagement中去找有没有指定版本号，
+        没有的话就会报错-->
+    <dependencyManagement>
+        <dependencies>
+            <dependency> <!-- 进行SpringCloud依赖包的导入处理 -->
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>Finchley.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency> <!-- SpringCloud离不开SpringBoot，所以必须要配置此依赖包 -->
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>2.0.7.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
+                <version>1.0.31</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>1.3.0</version>
+            </dependency>
+            <dependency>
+                <groupId>qiaocan</groupId>
+                <artifactId>c-service-api</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>qiaocan</groupId>
+                <artifactId>c-service-security</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <build>
+        <finalName>microcloud</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <!--用来编译配置文件中使用$符不能正确的获取值-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <delimiters>
+                        <delimiter>$</delimiter>
+                    </delimiters>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${jdk.version}</source><!-- 源代码使用的开发版本 -->
+                    <target>${jdk.version}</target><!-- 需要生成的目标class文件的编译版本 -->
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <distributionManagement>
+        <repository>
+            <uniqueVersion>false</uniqueVersion>
+            <id>corp1</id>
+            <name>Corporate Repository</name>
+            <url>C://Users/95/.m2/repository</url>
+        </repository>
+    </distributionManagement>
+
+    <repositories>
+        <repository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/milestone</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>https://mvnrepository.com/</id>
+            <name>Spring mvnrepository</name>
+            <url>https://mvnrepository.com/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+</project>

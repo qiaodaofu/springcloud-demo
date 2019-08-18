@@ -1,0 +1,12 @@
+#这张表用在配置中心 springcloudconfig
+
+spring:
+ application:
+    name: microcloud-config-product-client
+ zipkin:
+   base-url: http://localhost:8601 #所有的数据提交到此服务之中
+   sender:
+     type: RABBIT       #提交的类型是web 服务 如果是持久化的需要指定RABBIT，不持久化就指定web
+ sleuth:
+   sampler:
+     probability: 1.0 # 定义抽样比率，默认为0.1

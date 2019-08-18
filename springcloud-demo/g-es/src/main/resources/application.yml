@@ -1,0 +1,10 @@
+server:
+  port: 8088
+
+spring:
+  application:
+    name: f-es
+  data:
+    elasticsearch:
+      cluster-name: myes
+      cluster-nodes: 192.168.137.135:9300

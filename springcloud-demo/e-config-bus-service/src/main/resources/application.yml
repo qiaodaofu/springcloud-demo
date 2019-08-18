@@ -1,0 +1,36 @@
+server:
+  port: 7201
+spring:
+  application:
+    name: microcloud-config-bus-service
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/qiaodaofu/config-wenjianzhongxin.git
+          username: 153880481@qq.com
+          password: qdf7082027
+    bus:
+      trace:
+        enabled: true
+  rabbitmq:
+    host: 114.116.98.243
+    port: 5672    # RabbitMQ的监听端口
+    username: qiaocan  # 用户名
+    password: 123456 # 密码
+#    application:
+    ##      name: microcloud-config-bus
+    virtual-host: enjoyedu    #虚拟主机 默认是 /
+
+eureka:
+ client:
+  serviceUrl:
+    defaultZone: http://admin:enjoy@localhost:7011/eureka
+ instance:
+    prefer-ip-address: true # 在地址栏上使用IP地址进行显示
+    instance-id: microcloud-config-bus
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

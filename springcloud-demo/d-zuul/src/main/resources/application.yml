@@ -1,0 +1,58 @@
+server:
+  port: 9501
+
+eureka:
+  client: # 客户端进行Eureka注册的配置
+    service-url:
+      #  通过这种方式注册服务到有验证的注册中心
+      defaultZone: http://admin:enjoy1@127.0.0.1:7001/eureka
+      #  defaultZone: http://admin:enjoy@eureka1:7001/eureka,http://admin:enjoy@eureka2:7002/eureka,http://admin:enjoy@eureka3:7003/eureka
+  instance:
+    instance-id: microcloud-zuul-gateway
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 2 # 设置心跳的时间间隔（默认是30秒）
+    lease-expiration-duration-in-seconds: 5 # 如果现在超过了5秒的间隔（默认是90秒）
+
+
+spring:
+  application:
+    name:  microcloud-zuul-gateway
+  zipkin:
+    base-url: http://localhost:8601 #所有的数据提交到此服务之中
+    sender:
+      type: WEB       #提交的类型是web 服务 RABBIT
+  sleuth:
+    sampler:
+      probability: 1.0 # 定义抽样比率，默认为0.1
+    #给zuul设置访问权限
+  security:
+      user:
+        name: admin
+        password: enjoy
+
+#第一中设置路由规则的方法
+#zuul:
+#  routes:
+#    microcloud-provider-users:  /users-proxy/**
+#  ignored-services:
+#    "*"
+# 第二种设置路由规则的方法
+zuul:
+  routes:
+#    users:
+#      path: /users-proxy/**
+#      serviceId: microcloud-provider-users
+#    users2:                                  #这个是脱离eureka进行路由服务
+#      path: /users2-proxy/**
+#      url: http://localhost:8090/
+    product:                                  #自定义服务名称
+      path: /product-proxy/**                 #路由规则，这有通过这个规则才能访问到想要调取的服务
+      serviceId: microcloud-provider-product  #要路由的服务，这个名字和eureka上的提供的服务名一致
+  ignored-services:                           # 禁止使用 microcloud-provider-product 服务名的方式去访问服务，只能使用路由规则去访问
+    "*"
+  prefix: /enjoy-api                          #访问地址前缀
+
+#  测试地址，这个只是对提供者进行测试
+#  http://localhost:9501/enjoy-api/product-proxy/product/get/1
+#  这个是结合feign在消费端访问的路径，不是在zuul服务上访问
+#  http://localhost:8081/consumer/product/getZuul/1
